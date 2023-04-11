@@ -1,6 +1,7 @@
 import React, { FC, Fragment, ReactNode, Suspense, useContext, useMemo, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import styled, { ThemeContext } from 'styled-components';
+import { WebGL1Renderer } from 'three';
 import { Canvas, ThreeEvent } from '@react-three/fiber';
 import { useContextBridge } from '@react-three/drei/core/useContextBridge';
 import { MatterportViewer, MpSdk } from '@matterport/r3f/dist';
@@ -86,7 +87,7 @@ const R3FWrapper = (props: {
   } else {
     setMatterportSdk(sceneComposerId, undefined);
     return (
-      <UnselectableCanvas shadows dpr={window.devicePixelRatio}>
+      <UnselectableCanvas shadows dpr={window.devicePixelRatio} gl={(canvas) => new WebGL1Renderer({ canvas })}>
         <ContextBridge>
           <Suspense fallback={null}>{props.children}</Suspense>
         </ContextBridge>
